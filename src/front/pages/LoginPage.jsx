@@ -61,7 +61,7 @@ export default function LoginPage() {
                                 {error && <p style={{ color: "red" }}>{error}</p>}
 
                                 <p style={{ fontSize: 12, opacity: 0.8 }}>
-                                  Prueba: email con @ y password de 4+ caracteres.
+                                  Prueba: email con @ y password.
                                 </p>
                       </div>
                       <div className="col-lg-4"></div>

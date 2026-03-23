@@ -1,7 +1,17 @@
 import {api} from "./client"; 
 
 export async function sendMessage(message) {
-    const {data} = await api.post("/chat",{message});
+    const token = localStorage.getItem("token");
+    const {data} = await api.post(
+        "/chat",
+        {message},
+        {
+        headers:{
+            Authorization: `Bearer ${token}`, 
+            "Content-Type": "application/json",
+        }
+        }
+    );
     return data; 
 }
 

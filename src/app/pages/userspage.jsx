@@ -3,10 +3,15 @@ import { getUsers } from "../../api/admin_api";
 
 import DataTable from "datatables.net-dt";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
-// Si esa ruta no existe en tu caso, usa:
-// import "datatables.net-dt/css/dataTables.dataTables.css";
+import Button from 'react-bootstrap/Button'
 
-import { CCard, CCardBody, CCardHeader, CCardFooter } from "@coreui/react";
+
+import { 
+  CCard, 
+  CCardBody,
+  CCardHeader,
+  CCardFooter,
+  CButton } from "@coreui/react";
 
 export default function Users() {
   const tableRef = useRef(null);
@@ -52,7 +57,6 @@ export default function Users() {
     [destroyDataTable]
   );
 
-  // 1) cargar usuarios al montar
   useEffect(() => {
     let cancelled = false;
 
@@ -81,14 +85,10 @@ export default function Users() {
     };
   }, []);
 
-  // 2) inicializar / refrescar DataTable cuando users cambie
+
   useEffect(() => {
-    // si todavía está cargando o hay error, no init
     if (loading || error) return;
-
     initDataTable(users);
-
-    // cleanup: destruir al desmontar o antes de reiniciar
     return () => {
       destroyDataTable();
     };
@@ -96,12 +96,10 @@ export default function Users() {
 
   return (
     <CCard>
-      <CCardHeader className="mb-4" style={{ height: "8vh" }}>
-        <strong>Users</strong>
-        <span className="ms-auto text-body-secondary" style={{ fontSize: 12 }}>
-          Online
-        </span>
-      </CCardHeader>
+          <CCardHeader className="mb-4 d-flex align-items-center" style={{ height: "8vh" }}>
+              <strong>Usuarios</strong>
+              <Button type="button" className="btn btn-primary ms-auto" href="/app/users/create">Crear Usuario</Button>
+          </CCardHeader>
 
       <CCardBody className="d-flex flex-column overflow-auto">
         {loading && <div>Cargando...</div>}
@@ -114,8 +112,11 @@ export default function Users() {
         {/* DataTables 2 construye thead/tbody a partir de columns */}
         <table ref={tableRef} className="display" style={{ width: "100%" }} />
       </CCardBody>
+      
 
-      <CCardFooter />
+      <CCardFooter>
+     
+      </CCardFooter>
     </CCard>
   );
 }
