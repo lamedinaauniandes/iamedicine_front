@@ -5,7 +5,9 @@ import LandingPage from "./front/pages/LandingPage.jsx";
 import LoginPage from "./front/pages/LoginPage.jsx";
 import Layout from "./app/layout/Layout.jsx";
 import Chat from "./app/pages/ChatPage.jsx";
+import DiagnosticImages from "./app/pages/diagnostic_images.jsx";
 import Settings from "./app/pages/SettingsPage.jsx";
+
 import ChatPage from "./app/pages/proofChat.jsx";
 import Users from "./app/pages/userspage.jsx";
 import UserCreate from "./app/pages/userCreate.jsx";
@@ -52,7 +54,7 @@ function App() {
             <Route path="chat" element={<Chat />} />
             <Route path="settings" element={<Settings />} />
             <Route path="chatproof" element={<ChatPage />} />
-
+            <Route path="diagnosticimages" element={<DiagnosticImages />} />
             <Route
               path="users"
               element={
@@ -61,6 +63,15 @@ function App() {
                 </RoleProtectedRoute>
               }
             />
+
+            {/* <Route
+              path="diagnosticimages"
+              element={
+                <RoleProtectedRoute allowedRoles={[1, "1"]}>
+                  <DiagnosticImages />
+                </RoleProtectedRoute>
+              }
+            /> */}
 
             <Route
               path="users/create"

@@ -12,10 +12,18 @@ import {
 } from "@coreui/react";
 
 export default function Chat() {
+
+  const imageUrl = "https://iamedicine-images.s3.us-east-1.amazonaws.com/imagenes_RA/imagen3.jpg";
+  const imageUrl2 = "https://iamedicine-images.s3.us-east-1.amazonaws.com/imagenes_RA/imagen_1.jpg"
+
+  const presentation = `Hi there!, I am an expert Professor of Rheumatology specialized in the standardization of joint\
+   physical examination techniques to assess disease activity in adults with Rheumatoid Arthritis (RA).\
+   \n Can I help you?`
+
   const [texto, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([
-    { id: 1, role: "bot", text: "hola ¿En que te ayudo?" },
+    { id: 1, role: "bot", text: presentation, url_image:null },
   ]);
 
   const nextIdRef = useRef(2);
@@ -41,14 +49,17 @@ export default function Chat() {
     const trimmed = texto.trim();
     if (!trimmed || loading) return;
 
-    const userMsg = { id: nextIdRef.current++, role: "user", text: trimmed };
+    const userMsg = { id: nextIdRef.current++, role: "user", text: trimmed, url_image:null};
     setMessages((m) => [...m, userMsg]);
     setText("");
     setLoading(true);
 
     try {
       const res = await sendMessage(userMsg.text);
-      const botMsg = { id: nextIdRef.current++, role: "bot", text: res.reply };
+
+      console.log("este es la respuesta imagen:\n ",res.url_image);
+      
+      const botMsg = { id: nextIdRef.current++, role: "bot", text: res.reply, url_image: res.url_image };
       setMessages((m) => [...m, botMsg]);
     } catch (err) {
       setMessages((m) => [
@@ -98,17 +109,32 @@ export default function Chat() {
                 }}
               >
                 {m.role === "bot" ? (
-                  <ReactMarkdown
-                    components={{
-                      p: ({ children }) => <p className="mb-2">{children}</p>,
-                      ul: ({ children }) => <ul className="mb-2 ps-4">{children}</ul>,
-                      ol: ({ children }) => <ol className="mb-2 ps-4">{children}</ol>,
-                      li: ({ children }) => <li>{children}</li>,
-                      strong: ({ children }) => <strong>{children}</strong>,
-                    }}
-                  >
-                    {m.text}
-                  </ReactMarkdown>
+                   <>
+                      <ReactMarkdown
+                        components={{
+                          p: ({ children }) => <p className="mb-2">{children}</p>,
+                          ul: ({ children }) => <ul className="mb-2 ps-4">{children}</ul>,
+                          ol: ({ children }) => <ol className="mb-2 ps-4">{children}</ol>,
+                          li: ({ children }) => <li>{children}</li>,
+                          strong: ({ children }) => <strong>{children}</strong>,
+                        }}
+                      >  
+                        {m.text} 
+                      </ReactMarkdown>
+                      
+                      {
+                        (m.url_image != null)&(m.url_image != "")? 
+                          <div style={{ display: "flex", justifyContent: "center", marginTop: "8px" }}>
+                              <img src={m.url_image} alt="Imagen desde S3" style={{ width: "400px", borderRadius: "8px"}} />  
+                          </div>:
+                           <div style={{ display: "flex", justifyContent: "center", marginTop: "8px" }}>
+                              <img src={imageUrl2} alt="Imagen desde S3" style={{ width: "350px", borderRadius: "8px"}} />  
+                          </div>
+                      }
+
+                      
+                      
+                  </>
                 ) : (
                   <span style={{ whiteSpace: "pre-wrap" }}>{m.text}</span>
                 )}

@@ -6,7 +6,13 @@ import {
   CNavTitle,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { cilChatBubble, cilSettings, cilSpeedometer } from "@coreui/icons";
+
+import { 
+  cilChatBubble,
+  cilSettings,
+  cilSpeedometer,
+  cilImage,
+} from "@coreui/icons";
 
 export default function AppSidebar({ visible, setVisible }) {
   let user = null;
@@ -36,22 +42,33 @@ export default function AppSidebar({ visible, setVisible }) {
 
         <CNavItem href="/app/chat">
           <CIcon icon={cilChatBubble} className="nav-icon" />
-          Chat
+          Chat (RA)
         </CNavItem>
 
+        {isAdmin && (
+          <CNavItem href="/app/diagnosticimages">
+            <CIcon icon={cilImage} className="nav-icon" />
+                Diagnostic Images
+          </CNavItem>
+        )}
+         
         {isAdmin && (
           <CNavItem href="/app/users">
             <CIcon icon={cilSettings} className="nav-icon" />
             Users
           </CNavItem>
         )}
+        
+        {isAdmin && (
+          <CNavItem href="/app/settings">
+            <CIcon icon={cilSettings} className="nav-icon" />
+              Settings
+          </CNavItem>
+        )}
 
-        <CNavItem href="/app/settings">
-          <CIcon icon={cilSettings} className="nav-icon" />
-          Settings
-        </CNavItem>
-
-        <CNavTitle>Otros</CNavTitle>
+        {isAdmin && (
+          <CNavTitle>Otros</CNavTitle>
+        )} 
 
         <CNavItem href="#">
           <CIcon icon={cilSpeedometer} className="nav-icon" />
