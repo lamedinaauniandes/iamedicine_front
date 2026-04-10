@@ -125,10 +125,11 @@ export default function Chat() {
                       {
                         (m.url_image != null)&(m.url_image != "")? 
                           <div style={{ display: "flex", justifyContent: "center", marginTop: "8px" }}>
+
                               <img src={m.url_image} alt="Imagen desde S3" style={{ width: "400px", borderRadius: "8px"}} />  
                           </div>:
                            <div style={{ display: "flex", justifyContent: "center", marginTop: "8px" }}>
-                              <img src={imageUrl2} alt="Imagen desde S3" style={{ width: "350px", borderRadius: "8px"}} />  
+                              <img src={imageUrl} alt="Imagen desde S3" style={{ width: "350px", borderRadius: "8px"}} />  
                           </div>
                       }
 
